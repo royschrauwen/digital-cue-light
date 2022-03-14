@@ -34,6 +34,11 @@ io.on("connection", (socket) => {
       "\x1b[37m"
     );
     // console.log(data);
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+  socket.on("change_status", (data) => {
+    console.log(data);
   });
 
   socket.on("disconnect", () => {
@@ -42,5 +47,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(3001, () => {
-  console.log("SERVER RUNNING");
+  console.log(" ---------- SERVER RUNNING ---------- ");
 });

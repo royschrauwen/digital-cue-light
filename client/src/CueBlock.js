@@ -1,8 +1,16 @@
 import React from "react";
 import { useState } from "react";
 
-function CueBlock({ department }) {
+function CueBlock({ socket, department }) {
   const [status, setStatus] = useState("");
+
+  const changeStatus = (cueValue) => {
+    const statusData = {
+      dept: department,
+      stat: cueValue,
+    };
+    socket.emit("change_status", statusData);
+  };
 
   return (
     <div>
@@ -11,6 +19,7 @@ function CueBlock({ department }) {
       <button
         onClick={() => {
           setStatus("Attentie");
+          changeStatus("Attentie");
         }}
       >
         Attentie
@@ -18,6 +27,7 @@ function CueBlock({ department }) {
       <button
         onClick={() => {
           setStatus("GO!");
+          changeStatus("GO!");
         }}
       >
         Go

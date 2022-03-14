@@ -1,6 +1,6 @@
 import React from "react";
 import CueBlock from "./CueBlock";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Chat({ socket, username, room }) {
   const department = "Stagemanager";
@@ -25,8 +25,14 @@ function Chat({ socket, username, room }) {
     }
   };
 
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
+
   return (
-    <div>
+    <div className="chat-window">
       <div className="chat-header">
         <p>Live Chat</p>
       </div>
@@ -39,11 +45,11 @@ function Chat({ socket, username, room }) {
             setCurrentMessage(event.target.value);
           }}
         />
-        <button onClick={sendMessage}>Send &#9658;</button>
+        <button onClick={sendMessage}>&#9658;</button>
       </div>
 
-      <CueBlock department={department} />
-      <CueBlock department="Troubleshooter" />
+      <CueBlock socket={socket} department={department} />
+      <CueBlock socket={socket} department="Troubleshooter" />
     </div>
   );
 }
