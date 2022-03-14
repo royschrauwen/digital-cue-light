@@ -83,6 +83,9 @@
 
 <body>
 
+    <button id="createBtn">Create CueBlocks</button>
+    <div id="div1">The text above has been created dynamically.</div>
+
     <div class="buttons">
         <div class="user" id="user1">
             <div class="cue-color" id="cue-color1"></div>
@@ -109,6 +112,10 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+
+
+        let cueBlocks = ['Stagemanager', 'Light', 'Floor 1'];
+
         var socket = io();
 
         var messages = document.getElementById('messages');
@@ -129,6 +136,27 @@
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
+
+
+        function createCueBlocks() {
+            let newDiv = document.createElement("div");
+            const currentDiv = document.getElementById("div1");
+            currentDiv.innerHTML = '';
+            cueBlocks.forEach(
+                (block) => {
+                    console.log(block);
+                    let newCueBlock = document.createElement("div");
+                    const newContent = document.createTextNode(block);
+                    newCueBlock.appendChild(newContent);
+                    newDiv.appendChild(newCueBlock);
+                }
+            )
+            document.body.insertBefore(newDiv, currentDiv);
+            //currentDiv.innerText = newDiv;
+        }
+
+        document.getElementById('createBtn').addEventListener('click', createCueBlocks);
+
     </script>
 </body>
 
